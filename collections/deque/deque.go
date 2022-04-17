@@ -2,7 +2,7 @@ package deque
 
 import "errors"
 
-// A double-ended queue.
+// A simple double-ended queue.
 type Deque[T any] struct {
 	elements []T
 }
@@ -21,6 +21,18 @@ func (d *Deque[T]) getFirst() (T, error) {
 	return invalid, errors.New("Could not get first element; deque is empty.")
 }
 
+// Returns the last element of the deque.
+//
+// Returns an error if the deque is empty.
+func (d *Deque[T]) getLast() (T, error) {
+	length := len(d.elements)
+	if length > 0 {
+		return d.elements[length-1], nil
+	}
+	var invalid T
+	return invalid, errors.New("Could not get last element; deque is empty.")
+}
+
 // Pops the first element of the deque and returns the element.
 //
 // Returns an error if the deque is empty.
@@ -32,18 +44,6 @@ func (d *Deque[T]) popLeft() (T, error) {
 		return res, nil
 	}
 	return res, errors.New("Could not pop first element; deque is empty.")
-}
-
-// Returns the last element of the deque.
-//
-// Returns an error if the deque is empty.
-func (d *Deque[T]) getLast() (T, error) {
-	length := len(d.elements)
-	if length > 0 {
-		return d.elements[length-1], nil
-	}
-	var invalid T
-	return invalid, errors.New("Could not get first element; deque is empty.")
 }
 
 // Removes the last element of the deque and returns the element.
